@@ -1,0 +1,29 @@
+name: Build and Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Build with Gradle
+      run: |
+        ./gradlew build
+
+    - name: Archive JAR
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-project-jar
+        path: build/libs/*.jar
